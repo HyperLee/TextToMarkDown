@@ -88,6 +88,33 @@ describe('MarkdownConverter', () => {
         });
     });
 
+    describe('Mermaid Detection (T053)', () => {
+        it('should detect and wrap graph/flowchart/sequenceDiagram blocks', () => {
+            const graphInput = 'graph TD\nA-->B';
+            const flowchartInput = 'flowchart LR\nA-->B';
+            const sequenceInput = 'sequenceDiagram\nAlice->>Bob: Hello';
+
+            expect(MarkdownConverter.convertPlainText(graphInput))
+                .toContain('```mermaid\ngraph TD\nA-->B\n```');
+            expect(MarkdownConverter.convertPlainText(flowchartInput))
+                .toContain('```mermaid\nflowchart LR\nA-->B\n```');
+            expect(MarkdownConverter.convertPlainText(sequenceInput))
+                .toContain('```mermaid\nsequenceDiagram\nAlice->>Bob: Hello\n```');
+        });
+
+        it('should not double-wrap when mermaid fence already exists', () => {
+            const input = '```mermaid\ngraph TD\nA-->B\n```';
+            const output = MarkdownConverter.convertPlainText(input);
+            expect(output).toBe(input);
+        });
+
+        it('should not create mermaid block when no mermaid content exists', () => {
+            const input = 'Just a normal paragraph';
+            const output = MarkdownConverter.convertPlainText(input);
+            expect(output).not.toContain('```mermaid');
+        });
+    });
+
     describe('Unicode Support (T052)', () => {
         it('should handle mixed Chinese and English correctly', () => {
             const input = "這是一個測試 Paragraph with English words.";

@@ -166,13 +166,13 @@
 
 > **先寫測試，確保失敗後再實作功能**
 
-- [ ] T053 [P] [US4] 撰寫 Mermaid 語法偵測 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（graph、flowchart、sequenceDiagram 等關鍵字偵測、已有 mermaid 標記不重複包裹、無 Mermaid 內容不產生區塊）
+- [X] T053 [P] [US4] 撰寫 Mermaid 語法偵測 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（graph、flowchart、sequenceDiagram 等關鍵字偵測、已有 mermaid 標記不重複包裹、無 Mermaid 內容不產生區塊）
 
 ### 實作
 
-- [ ] T038 [US4] 實作 Mermaid 語法偵測正規表達式於 TextToMarkDown/wwwroot/js/markdown-converter.js（關鍵字偵測：graph、flowchart、sequenceDiagram、classDiagram 等 15 種圖表類型）
-- [ ] T039 [US4] 實作 Mermaid 區塊包裹邏輯於 TextToMarkDown/wwwroot/js/markdown-converter.js（偵測到的區塊以 ` ```mermaid ` 和 ` ``` ` 包裹、已有標記不重複包裹）
-- [ ] T040 [US4] 整合 Mermaid 偵測至 convertPlainText 與 convertHtml 流程於 TextToMarkDown/wwwroot/js/markdown-converter.js（HTML 來源的 `<code>` / `<pre>` 標籤中 Mermaid 內容偵測）
+- [X] T038 [US4] 實作 Mermaid 語法偵測正規表達式於 TextToMarkDown/wwwroot/js/markdown-converter.js（關鍵字偵測：graph、flowchart、sequenceDiagram、classDiagram 等 15 種圖表類型）
+- [X] T039 [US4] 實作 Mermaid 區塊包裹邏輯於 TextToMarkDown/wwwroot/js/markdown-converter.js（偵測到的區塊以 ` ```mermaid ` 和 ` ``` ` 包裹、已有標記不重複包裹）
+- [X] T040 [US4] 整合 Mermaid 偵測至 convertPlainText 與 convertHtml 流程於 TextToMarkDown/wwwroot/js/markdown-converter.js（HTML 來源的 `<code>` / `<pre>` 標籤中 Mermaid 內容偵測）
 
 **檢查點**: 所有 User Stories (1-5) 均完整可用且可獨立測試
 

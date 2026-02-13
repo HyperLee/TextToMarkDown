@@ -28,6 +28,23 @@ if (!_turndownPluginGfm) {
 
 export class MarkdownConverter {
     static _turndownInstance = null;
+    static _mermaidKeywords = [
+        'graph',
+        'flowchart',
+        'sequenceDiagram',
+        'classDiagram',
+        'stateDiagram',
+        'erDiagram',
+        'journey',
+        'gantt',
+        'pie',
+        'gitgraph',
+        'mindmap',
+        'timeline',
+        'quadrantChart',
+        'sankey',
+        'xychart'
+    ];
 
     static init() {
         this._turndownInstance = this._createTurndownInstance();
@@ -157,10 +174,27 @@ export class MarkdownConverter {
         const service = this._getTurndownInstance();
         if (!service) return html; // Fallback if Turndown unavailable
 
-        return service.turndown(html).trim();
+        const markdown = service.turndown(html).trim();
+        const wrappedMarkdown = this.wrapMermaidCodeFences(markdown);
+        return this.wrapMermaidBlocks(wrappedMarkdown).trim();
     }
 
     static convertPlainText(text) {
+        if (!text) return '';
+
+        const wrapped = this.wrapMermaidBlocks(text);
+        const segments = wrapped.split(/(```mermaid[\s\S]*?```)/g);
+        return segments.map((segment, index) => {
+            // Keep Mermaid fenced blocks untouched
+            if (index % 2 === 1) {
+                return segment;
+            }
+
+            return this.convertPlainTextCore(segment);
+        }).join('');
+    }
+
+    static convertPlainTextCore(text) {
         if (!text) return '';
 
         const lines = text.split(/\r?\n/);
@@ -199,6 +233,47 @@ export class MarkdownConverter {
         }
 
         return output.join('\n');
+    }
+
+    static wrapMermaidBlocks(text) {
+        if (!text) return '';
+
+        const parts = text.split(/(\r?\n\s*\r?\n+)/);
+        return parts.map((part, index) => {
+            // Preserve separators
+            if (index % 2 === 1) {
+                return part;
+            }
+
+            const trimmed = part.trim();
+            if (!trimmed) return part;
+            if (this.isMermaidFencedBlock(trimmed)) return trimmed;
+            if (!this.isMermaidSyntax(trimmed)) return part;
+
+            return `\`\`\`mermaid\n${trimmed}\n\`\`\``;
+        }).join('');
+    }
+
+    static wrapMermaidCodeFences(markdown) {
+        if (!markdown) return '';
+
+        return markdown.replace(/```([^\n`]*)\n([\s\S]*?)```/g, (match, language, code) => {
+            const normalizedLang = (language || '').trim().toLowerCase();
+            if (normalizedLang === 'mermaid') return match;
+            if (normalizedLang !== '') return match;
+            if (!this.isMermaidSyntax(code.trim())) return match;
+
+            return `\`\`\`mermaid\n${code.replace(/\n+$/g, '')}\n\`\`\``;
+        });
+    }
+
+    static isMermaidSyntax(text) {
+        const regex = new RegExp(`^\\s*(?:${this._mermaidKeywords.join('|')})\\b`, 'i');
+        return regex.test((text || '').trim());
+    }
+
+    static isMermaidFencedBlock(text) {
+        return /^```mermaid[\s\S]*```$/i.test((text || '').trim());
     }
 
     /**
