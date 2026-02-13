@@ -26,15 +26,15 @@
 
 **目的**: 安裝相依套件、建立專案結構、準備基礎設施
 
-- [ ] T001 安裝 Serilog NuGet 套件（Serilog.AspNetCore、Serilog.Sinks.File、Serilog.Settings.Configuration）至 TextToMarkDown/TextToMarkDown.csproj
-- [ ] T002 設定 Serilog 結構化日誌於 TextToMarkDown/Program.cs（UseSerilog + UseSerilogRequestLogging）
-- [ ] T003 [P] 設定 Serilog 組態於 TextToMarkDown/appsettings.json（MinimumLevel、Console + File Sink、Enricher）
-- [ ] T004 [P] 設定開發環境 Serilog 組態於 TextToMarkDown/appsettings.Development.json（Debug 層級）
-- [ ] T005 下載並放置 Turndown.js 7.1.0 至 TextToMarkDown/wwwroot/lib/turndown/turndown.js
-- [ ] T006 [P] 下載並放置 turndown-plugin-gfm 至 TextToMarkDown/wwwroot/lib/turndown/turndown-plugin-gfm.js
-- [ ] T007 建立 xUnit 測試專案 TextToMarkDown.Tests/TextToMarkDown.Tests.csproj（含 xUnit、Moq、Microsoft.AspNetCore.Mvc.Testing 參考）
-- [ ] T008 [P] 將測試專案加入方案檔 TextToMarkDown.slnx
-- [ ] T047 [P] 安裝 Vitest JavaScript 測試框架至 TextToMarkDown/ 專案（npm init、安裝 vitest、建立 vitest.config.js、新增 package.json test 腳本）
+- [X] T001 安裝 Serilog NuGet 套件（Serilog.AspNetCore、Serilog.Sinks.File、Serilog.Settings.Configuration）至 TextToMarkDown/TextToMarkDown.csproj
+- [X] T002 設定 Serilog 結構化日誌於 TextToMarkDown/Program.cs（UseSerilog + UseSerilogRequestLogging）
+- [X] T003 [P] 設定 Serilog 組態於 TextToMarkDown/appsettings.json（MinimumLevel、Console + File Sink、Enricher）
+- [X] T004 [P] 設定開發環境 Serilog 組態於 TextToMarkDown/appsettings.Development.json（Debug 層級）
+- [X] T005 下載並放置 Turndown.js 7.1.0 至 TextToMarkDown/wwwroot/lib/turndown/turndown.js
+- [X] T006 [P] 下載並放置 turndown-plugin-gfm 至 TextToMarkDown/wwwroot/lib/turndown/turndown-plugin-gfm.js
+- [X] T007 建立 xUnit 測試專案 TextToMarkDown.Tests/TextToMarkDown.Tests.csproj（含 xUnit、Moq、Microsoft.AspNetCore.Mvc.Testing 參考）
+- [X] T008 [P] 將測試專案加入方案檔 TextToMarkDown.slnx
+- [X] T047 [P] 安裝 Vitest JavaScript 測試框架至 TextToMarkDown/ 專案（npm init、安裝 vitest、建立 vitest.config.js、新增 package.json test 腳本）
 
 ---
 

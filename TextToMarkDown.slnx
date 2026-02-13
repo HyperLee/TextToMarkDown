@@ -1,2 +1,4 @@
 <Solution>
+  <Project Path="TextToMarkDown.Tests/TextToMarkDown.Tests.csproj" />
+  <Project Path="TextToMarkDown/TextToMarkDown.csproj" />
 </Solution>
