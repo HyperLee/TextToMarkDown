@@ -277,13 +277,54 @@ export class MarkdownConverter {
     }
 
     /**
+     * Detect whether the input text is already in Markdown format (T042).
+     * Returns true if multiple Markdown syntax patterns are found,
+     * indicating the content should be kept as-is to avoid double conversion.
+     * @param {string} text - Input text to check
+     * @returns {boolean} True if input appears to already be Markdown
+     */
+    static isAlreadyMarkdown(text) {
+        if (!text || typeof text !== 'string') return false;
+
+        const patterns = [
+            /^#{1,6}\s+\S/m,                       // ATX headings
+            /\[.+?\]\(.+?\)/,                       // Links [text](url)
+            /!\[.*?\]\(.+?\)/,                      // Images ![alt](url)
+            /(\*\*|__).+?\1/,                       // Bold
+            /(\*|_)(?!\1).+?\1/,                    // Italic (but not bold)
+            /^>\s+/m,                               // Blockquotes
+            /^```[\s\S]*?```/m,                     // Fenced code blocks
+            /`[^`]+`/,                              // Inline code
+            /^-{3,}$/m,                             // Horizontal rules
+            /^\s*[-*+]\s+\S/m,                      // Unordered lists
+            /^\s*\d+\.\s+\S/m,                      // Ordered lists
+            /\|.*\|.*\|/                            // Tables
+        ];
+
+        let matchCount = 0;
+        for (const pattern of patterns) {
+            if (pattern.test(text)) {
+                matchCount++;
+            }
+            if (matchCount >= 2) return true;
+        }
+        return false;
+    }
+
+    /**
      * Unified conversion entry point (T033)
-     * Automatically selects convertHtml or convertPlainText based on InputData.type
+     * Automatically selects convertHtml or convertPlainText based on InputData.type.
+     * If the input is detected as already-Markdown, it is returned as-is (T042).
      * @param {object} inputData - InputData object with type and data properties
      * @returns {string} Markdown formatted string
      */
     static convert(inputData) {
         if (!inputData || !inputData.data) return '';
+
+        // T042: Skip conversion if input already appears to be Markdown
+        if (inputData.type === 'text' && this.isAlreadyMarkdown(inputData.data)) {
+            return inputData.data;
+        }
 
         if (inputData.type === 'html') {
             return this.convertHtml(inputData.data);

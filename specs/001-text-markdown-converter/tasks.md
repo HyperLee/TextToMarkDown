@@ -182,13 +182,13 @@
 
 **目的**: 影響多個使用者故事的改進與品質強化
 
-- [ ] T041 [P] 更新 TextToMarkDown/Pages/Privacy.cshtml 說明客戶端處理隱私政策（資料不離開瀏覽器）
-- [ ] T042 [P] 新增已有 Markdown 格式偵測邏輯於 TextToMarkDown/wwwroot/js/markdown-converter.js（偵測輸入已是 Markdown 則保持原樣不重複轉換）
-- [ ] T043 程式碼清理與 XML 文件註解確認於 TextToMarkDown/Pages/Index.cshtml.cs 與 TextToMarkDown/Program.cs
-- [ ] T044 [P] 撰寫全頁面端對端驗證測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證完整 HTML 結構包含所有合約定義的 UI 元素；含 FR-018 驗證：確認頁面僅有單一轉換入口，無批量轉換功能）
-- [ ] T045 [P] 新增 .gitignore 規則排除 Logs/ 目錄
-- [ ] T054 [P] 執行效能基準驗證（Lighthouse CLI 或手動檢測：FCP < 1.5s、LCP < 2.5s；10,000 字元轉換 < 3s 計時驗證）
-- [ ] T046 執行 quickstart.md 驗證 — 按快速入門指南步驟從零建構並啟動專案
+- [X] T041 [P] 更新 TextToMarkDown/Pages/Privacy.cshtml 說明客戶端處理隱私政策（資料不離開瀏覽器）
+- [X] T042 [P] 新增已有 Markdown 格式偵測邏輯於 TextToMarkDown/wwwroot/js/markdown-converter.js（偵測輸入已是 Markdown 則保持原樣不重複轉換）
+- [X] T043 程式碼清理與 XML 文件註解確認於 TextToMarkDown/Pages/Index.cshtml.cs 與 TextToMarkDown/Program.cs
+- [X] T044 [P] 撰寫全頁面端對端驗證測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證完整 HTML 結構包含所有合約定義的 UI 元素；含 FR-018 驗證：確認頁面僅有單一轉換入口，無批量轉換功能）
+- [X] T045 [P] 新增 .gitignore 規則排除 Logs/ 目錄
+- [X] T054 [P] 執行效能基準驗證（Lighthouse CLI 或手動檢測：FCP < 1.5s、LCP < 2.5s；10,000 字元轉換 < 3s 計時驗證）
+- [X] T046 執行 quickstart.md 驗證 — 按快速入門指南步驟從零建構並啟動專案
 
 ---
 

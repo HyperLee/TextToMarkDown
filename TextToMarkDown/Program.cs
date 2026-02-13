@@ -2,23 +2,33 @@ using Serilog;
 
 namespace TextToMarkDown;
 
+/// <summary>
+/// Application entry point for the Text-to-Markdown converter web application.
+/// Configures Serilog structured logging, security headers, and the ASP.NET Core
+/// Razor Pages middleware pipeline.
+/// </summary>
 public class Program
 {
+    /// <summary>
+    /// Configures and starts the web application.
+    /// </summary>
+    /// <param name="args">Command-line arguments.</param>
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Configure Serilog from appsettings.json (T002)
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration)
             .CreateLogger();
 
         builder.Host.UseSerilog();
 
-        // Add services to the container.
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
 
+        // Serilog request logging middleware (T002)
         app.UseSerilogRequestLogging();
 
         // Security headers middleware (T011)
@@ -33,11 +43,9 @@ public class Program
             await next();
         });
 
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
