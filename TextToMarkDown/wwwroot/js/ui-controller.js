@@ -4,11 +4,16 @@ export class UIController {
         this.inputText = document.getElementById('inputText');
         this.outputText = document.getElementById('outputText');
         this.convertBtn = document.getElementById('convertBtn');
+        this.copyBtn = document.getElementById('copyBtn');
         this.charCount = document.getElementById('charCount');
         this.alertArea = document.getElementById('alertArea');
 
         if (this.convertBtn) {
             this.convertBtn.addEventListener('click', () => this.handleConvert());
+        }
+
+        if (this.copyBtn) {
+            this.copyBtn.addEventListener('click', () => this.copyToClipboard());
         }
 
         if (this.inputText) {
@@ -72,6 +77,26 @@ export class UIController {
         }
     }
 
+    static async copyToClipboard() {
+        if (!this.outputText || !navigator.clipboard || !navigator.clipboard.writeText) {
+            this.showAlert('Clipboard API is not available in this browser.', 'danger');
+            return;
+        }
+
+        const output = this.outputText.value;
+        if (!output || output.trim().length === 0) {
+            this.showAlert('No markdown content to copy.', 'warning');
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(output);
+            this.showAlert('Markdown copied to clipboard.', 'success');
+        } catch (error) {
+            this.showAlert('Failed to copy markdown to clipboard.', 'danger');
+        }
+    }
+
     static showAlert(message, type) {
         if (!this.alertArea) return;
 
@@ -79,10 +104,13 @@ export class UIController {
             this.alertArea.innerHTML = '';
             return;
         }
+
+        const validTypes = ['success', 'warning', 'danger', 'info'];
+        const alertType = validTypes.includes(type) ? type : 'info';
         
         const wrapper = document.createElement('div');
         wrapper.innerHTML = [
-            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `<div class="alert alert-${alertType} alert-dismissible fade show" role="alert">`,
             `   <div>${message}</div>`,
             '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
             '</div>'
@@ -90,6 +118,13 @@ export class UIController {
 
         this.alertArea.innerHTML = '';
         this.alertArea.append(wrapper);
+
+        setTimeout(() => {
+            const alertElement = this.alertArea.querySelector('.alert');
+            if (alertElement) {
+                alertElement.remove();
+            }
+        }, 3000);
     }
 }
 

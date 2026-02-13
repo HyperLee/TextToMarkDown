@@ -97,13 +97,13 @@
 
 ### 測試 ⚠️
 
-- [ ] T024 [P] [US2] 撰寫首頁含複製按鈕整合測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證 GET / 含 #copyBtn 元素）
+- [X] T024 [P] [US2] 撰寫首頁含複製按鈕整合測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證 GET / 含 #copyBtn 元素）
 
 ### 實作
 
-- [ ] T025 [US2] 新增複製按鈕（button#copyBtn）於 TextToMarkDown/Pages/Index.cshtml 輸出區域下方
-- [ ] T026 [US2] 實作 UIController.copyToClipboard 函式於 TextToMarkDown/wwwroot/js/ui-controller.js（navigator.clipboard.writeText API、成功/失敗提示、空內容檢查）
-- [ ] T027 [US2] 實作 UIController.showAlert 函式完善於 TextToMarkDown/wwwroot/js/ui-controller.js（Bootstrap 5 alert 元件、自動消失、四種類型 success/warning/danger/info）
+- [X] T025 [US2] 新增複製按鈕（button#copyBtn）於 TextToMarkDown/Pages/Index.cshtml 輸出區域下方
+- [X] T026 [US2] 實作 UIController.copyToClipboard 函式於 TextToMarkDown/wwwroot/js/ui-controller.js（navigator.clipboard.writeText API、成功/失敗提示、空內容檢查）
+- [X] T027 [US2] 實作 UIController.showAlert 函式完善於 TextToMarkDown/wwwroot/js/ui-controller.js（Bootstrap 5 alert 元件、自動消失、四種類型 success/warning/danger/info）
 
 **檢查點**: User Stories 1 + 2 均可獨立運作 — 完整的「貼上 → 轉換 → 複製」核心流程
 

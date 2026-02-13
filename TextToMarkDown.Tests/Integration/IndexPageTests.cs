@@ -46,5 +46,8 @@ public class IndexPageTests : IClassFixture<WebApplicationFactory<Program>>
         
         // Verify output area
         Assert.Contains("id=\"outputText\"", content);
+
+        // Verify copy button (US2)
+        Assert.Contains("id=\"copyBtn\"", content);
     }
 }
