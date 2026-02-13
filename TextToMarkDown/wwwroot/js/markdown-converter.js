@@ -176,12 +176,18 @@ export class MarkdownConverter {
             }
 
             // List detection (unordered)
-            // Matches "- item" or "* item"
-            const listMatch = line.match(/^(\s*)([-*])\s+(.*)$/);
+            // Matches "- item", "* item", "• item", "‧ item"
+            const listMatch = line.match(/^(\s*)([-*•‧])\s+(.*)$/);
             if (listMatch) {
                 const indent = listMatch[1];
-                const marker = listMatch[2];
+                let marker = listMatch[2];
                 const content = listMatch[3];
+
+                // Normalize bullets to hyphen
+                if (marker === '•' || marker === '‧') {
+                    marker = '-';
+                }
+
                 // Escape content only
                 const escapedContent = this.escapeMarkdown(content);
                 output.push(`${indent}${marker} ${escapedContent}`);

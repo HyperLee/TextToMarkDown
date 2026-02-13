@@ -144,13 +144,13 @@
 
 > **先寫測試，確保失敗後再實作功能**
 
-- [ ] T052 [P] [US5] 撰寫 Unicode 多語言處理 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（中英文混合段落、CJK 字元列表偵測、表情符號保留、中文標點符號處理）
+- [X] T052 [P] [US5] 撰寫 Unicode 多語言處理 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（中英文混合段落、CJK 字元列表偵測、表情符號保留、中文標點符號處理）
 
 ### 實作
 
-- [ ] T035 [US5] 驗證並確保 MarkdownConverter 純文字處理正確處理 Unicode 字元於 TextToMarkDown/wwwroot/js/markdown-converter.js（中文標點列表偵測 `•`/`‧`、Unicode 空白處理、特殊字元跳脫不影響 CJK 字元）
-- [ ] T036 [US5] 設定頁面 meta charset=utf-8 與 Content-Type 確認於 TextToMarkDown/Pages/Shared/_Layout.cshtml（確保 HTML 回應正確編碼）
-- [ ] T037 [US5] 在 TextToMarkDown/wwwroot/js/ui-controller.js 確保字元計數正確處理多位元組字元（使用 Array.from 或展開運算子計算實際字元數）
+- [X] T035 [US5] 驗證並確保 MarkdownConverter 純文字處理正確處理 Unicode 字元於 TextToMarkDown/wwwroot/js/markdown-converter.js（中文標點列表偵測 `•`/`‧`、Unicode 空白處理、特殊字元跳脫不影響 CJK 字元）
+- [X] T036 [US5] 設定頁面 meta charset=utf-8 與 Content-Type 確認於 TextToMarkDown/Pages/Shared/_Layout.cshtml（確保 HTML 回應正確編碼）
+- [X] T037 [US5] 在 TextToMarkDown/wwwroot/js/ui-controller.js 確保字元計數正確處理多位元組字元（使用 Array.from 或展開運算子計算實際字元數）
 
 **檢查點**: 所有語言混合輸入均正確處理 — 中文、英文、日韓、表情符號無亂碼
 

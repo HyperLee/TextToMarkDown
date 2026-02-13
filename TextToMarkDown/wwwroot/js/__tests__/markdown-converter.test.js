@@ -87,4 +87,33 @@ describe('MarkdownConverter', () => {
             expect(MarkdownConverter.convertHtml(undefined)).toBe('');
         });
     });
+
+    describe('Unicode Support (T052)', () => {
+        it('should handle mixed Chinese and English correctly', () => {
+            const input = "這是一個測試 Paragraph with English words.";
+            const output = MarkdownConverter.convertPlainText(input);
+            expect(output).toBe("這是一個測試 Paragraph with English words\\.");
+        });
+
+        it('should preserve Emojis', () => {
+            const input = "Hello 🌍! 😊";
+            const output = MarkdownConverter.convertPlainText(input);
+            expect(output).toBe("Hello 🌍\\! 😊");
+        });
+
+        it('should convert Chinese list bullets to Markdown bullets', () => {
+            const input = "• 項目一\n‧ 項目二";
+            const output = MarkdownConverter.convertPlainText(input);
+            expect(output).toContain("- 項目一");
+            expect(output).toContain("- 項目二");
+        });
+
+        it('should handle Chinese punctuation without escaping unnecessarily', () => {
+            const input = "你好，世界！";
+            const output = MarkdownConverter.convertPlainText(input);
+            // "!" is escaped by default logic, ensuring it stays consistent
+            // But Chinese punctuation "，" "！" (full width) should NOT be escaped
+            expect(output).toBe("你好，世界！"); 
+        });
+    });
 });

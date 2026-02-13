@@ -80,7 +80,10 @@ export class UIController {
     }
 
     static updateCharCount() {
-        const length = this.inputText.value.length;
+        // Use spread syntax or Array.from to correctly count surrogate pairs (emojis) as single characters
+        const text = this.inputText.value || '';
+        const length = [...text].length;
+        
         if (this.charCount) {
             this.charCount.textContent = `${length.toLocaleString()} / 100,000`;
             if (length > 100000) {
