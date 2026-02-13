@@ -29,3 +29,18 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* T018 Styles */
+textarea.form-control {
+    resize: vertical;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+#charCount {
+    font-size: 0.9em;
+}
+
+#alertArea {
+    min-height: 20px;
+    margin-bottom: 1rem;
+}

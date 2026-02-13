@@ -480,3 +480,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Phase 1 Node/Vitest artifacts
+dist/
+build/
+coverage/
+.env*
