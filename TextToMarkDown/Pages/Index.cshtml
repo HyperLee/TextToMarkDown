@@ -32,12 +32,10 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/markdown-converter.js" asp-append-version="true"></script>
-    <script src="~/js/clipboard-handler.js" asp-append-version="true"></script>
-    <script src="~/js/ui-controller.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function() {
-            UIController.init();
-        });
+    <script type="module">
+        import '/js/markdown-converter.js';
+        import '/js/clipboard-handler.js';
+        import '/js/ui-controller.js';
+        window.UIController.init();
     </script>
 }
