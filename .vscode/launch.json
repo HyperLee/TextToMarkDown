@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/TextToMarkDown/bin/Debug/net10.0/TextToMarkDown.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/TextToMarkDown",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "dotnetRunMessages": true,
+      "sourceFileMap": {
+        "${workspaceFolder}/TextToMarkDown": "${workspaceFolder}/TextToMarkDown"
+      }
+    },
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}

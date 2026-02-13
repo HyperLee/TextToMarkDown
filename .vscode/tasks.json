@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "restore",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "restore",
+        "${workspaceFolder}/TextToMarkDown/TextToMarkDown.csproj"
+      ],
+      "problemMatcher": ["$msCompile"],
+      "presentation": { "reveal": "silent" }
+    },
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/TextToMarkDown/TextToMarkDown.csproj",
+        "-c",
+        "Debug"
+      ],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$msCompile"]
+    },
+    {
+      "label": "watch",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/TextToMarkDown/TextToMarkDown.csproj"
+      ],
+      "isBackground": true,
+      "presentation": { "reveal": "always" },
+      "problemMatcher": {
+        "owner": "dotnet-watch",
+        "pattern": [
+          {
+            "regexp": ".",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "watch : Started",
+          "endsPattern": "watch : Exited"
+        }
+      }
+    }
+  ]
+}
