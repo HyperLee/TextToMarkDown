@@ -31,13 +31,21 @@ export class UIController {
         if (result && result.data) {
             e.preventDefault();
             
+            // Store the paste data including type (text or html) for convert
+            this._lastPasteData = result;
+
+            // For display in textarea, use plain text version
+            const displayText = (result.type === 'html')
+                ? (e.clipboardData.getData('text/plain') || result.data)
+                : result.data;
+
             const start = this.inputText.selectionStart;
             const end = this.inputText.selectionEnd;
             const text = this.inputText.value;
-            const newText = text.substring(0, start) + result.data + text.substring(end);
+            const newText = text.substring(0, start) + displayText + text.substring(end);
             this.inputText.value = newText;
             
-            this.inputText.selectionStart = this.inputText.selectionEnd = start + result.data.length;
+            this.inputText.selectionStart = this.inputText.selectionEnd = start + displayText.length;
             this.updateCharCount();
         }
     }
@@ -60,7 +68,13 @@ export class UIController {
 
         const converter = window.MarkdownConverter || MarkdownConverter;
         if (converter) {
-            const markdown = converter.convertPlainText(text);
+            // Use unified convert entry point if InputData is available, else default to plain text
+            const inputData = this._lastPasteData || { type: 'text', data: text };
+            // If the user typed manually (no paste), always use plain text
+            if (!this._lastPasteData) {
+                inputData.data = text;
+            }
+            const markdown = converter.convert ? converter.convert(inputData) : converter.convertPlainText(text);
             this.outputText.value = markdown;
         }
     }

@@ -1,7 +1,163 @@
 
+// Attempt to load TurndownService and GFM plugin for Node/test environments
+let _TurndownService = null;
+let _turndownPluginGfm = null;
+
+if (typeof TurndownService !== 'undefined') {
+    _TurndownService = TurndownService;
+}
+
+if (typeof turndownPluginGfm !== 'undefined') {
+    _turndownPluginGfm = turndownPluginGfm;
+}
+
+// Node/Bun environment: load from npm packages for testing
+if (!_TurndownService) {
+    try {
+        const mod = await import('turndown');
+        _TurndownService = mod.default || mod;
+    } catch (e) { /* browser-only */ }
+}
+
+if (!_turndownPluginGfm) {
+    try {
+        const mod = await import('@joplin/turndown-plugin-gfm');
+        _turndownPluginGfm = mod;
+    } catch (e) { /* browser-only */ }
+}
+
 export class MarkdownConverter {
+    static _turndownInstance = null;
+
     static init() {
-        // Any initialization logic if needed
+        this._turndownInstance = this._createTurndownInstance();
+    }
+
+    static _createTurndownInstance() {
+        const TDS = (typeof TurndownService !== 'undefined') ? TurndownService : _TurndownService;
+        if (!TDS) return null;
+
+        const service = new TDS({
+            headingStyle: 'atx',
+            codeBlockStyle: 'fenced',
+            bulletListMarker: '-',
+            emDelimiter: '*',
+            strongDelimiter: '**',
+            hr: '---'
+        });
+
+        // Load GFM plugin for tables, strikethrough, task lists (T034)
+        const gfmPlugin = (typeof turndownPluginGfm !== 'undefined') ? turndownPluginGfm : _turndownPluginGfm;
+        if (gfmPlugin && gfmPlugin.gfm) {
+            service.use(gfmPlugin.gfm);
+        }
+
+        // Custom rule: Headings H1-H6 (T031 / FR-005)
+        service.addRule('headings', {
+            filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+            replacement: function (content, node) {
+                const level = Number(node.nodeName.charAt(1));
+                const prefix = '#'.repeat(level);
+                return '\n\n' + prefix + ' ' + content.trim() + '\n\n';
+            }
+        });
+
+        // Custom rule: Links (T031 / FR-007)
+        service.addRule('links', {
+            filter: function (node) {
+                return node.nodeName === 'A' && node.getAttribute('href');
+            },
+            replacement: function (content, node) {
+                const href = node.getAttribute('href');
+                const title = node.title ? ' "' + node.title + '"' : '';
+                return '[' + content + '](' + href + title + ')';
+            }
+        });
+
+        // Custom rule: Images with placeholder (T031 / FR-008)
+        service.addRule('images', {
+            filter: 'img',
+            replacement: function (content, node) {
+                const alt = node.getAttribute('alt') || 'image';
+                const src = node.getAttribute('src') || '';
+                const title = node.title ? ' "' + node.title + '"' : '';
+                return '![' + alt + '](' + src + title + ')';
+            }
+        });
+
+        // Custom rule: Bold / Strong (T032 / FR-009)
+        service.addRule('bold', {
+            filter: ['strong', 'b'],
+            replacement: function (content) {
+                if (!content.trim()) return content;
+                return '**' + content + '**';
+            }
+        });
+
+        // Custom rule: Italic / Emphasis (T032 / FR-009)
+        service.addRule('italic', {
+            filter: ['em', 'i'],
+            replacement: function (content) {
+                if (!content.trim()) return content;
+                return '*' + content + '*';
+            }
+        });
+
+        // Custom rule: Code blocks (T032 / FR-012)
+        service.addRule('codeBlocks', {
+            filter: function (node) {
+                return node.nodeName === 'PRE' && node.firstChild && node.firstChild.nodeName === 'CODE';
+            },
+            replacement: function (content, node) {
+                const codeNode = node.firstChild;
+                const language = (codeNode.getAttribute('class') || '').replace(/^language-/, '');
+                const code = codeNode.textContent || '';
+                return '\n\n```' + language + '\n' + code + '\n```\n\n';
+            }
+        });
+
+        // Custom rule: Blockquote (T051 / FR-019)
+        service.addRule('blockquote', {
+            filter: 'blockquote',
+            replacement: function (content) {
+                const lines = content.replace(/^\n+|\n+$/g, '').split('\n');
+                const quoted = lines.map(function (line) {
+                    return '> ' + line;
+                }).join('\n');
+                return '\n\n' + quoted + '\n\n';
+            }
+        });
+
+        // Custom rule: Horizontal rule (T051 / FR-020)
+        service.addRule('horizontalRule', {
+            filter: 'hr',
+            replacement: function () {
+                return '\n\n---\n\n';
+            }
+        });
+
+        return service;
+    }
+
+    static _getTurndownInstance() {
+        if (!this._turndownInstance) {
+            this._turndownInstance = this._createTurndownInstance();
+        }
+        return this._turndownInstance;
+    }
+
+    /**
+     * Convert HTML content to Markdown (T030)
+     * @param {string} html - HTML markup string
+     * @returns {string} Markdown formatted string
+     */
+    static convertHtml(html) {
+        if (!html) return '';
+
+        const service = this._getTurndownInstance();
+        if (!service) return html; // Fallback if Turndown unavailable
+
+        return service.turndown(html).trim();
     }
 
     static convertPlainText(text) {
@@ -37,6 +193,22 @@ export class MarkdownConverter {
         }
 
         return output.join('\n');
+    }
+
+    /**
+     * Unified conversion entry point (T033)
+     * Automatically selects convertHtml or convertPlainText based on InputData.type
+     * @param {object} inputData - InputData object with type and data properties
+     * @returns {string} Markdown formatted string
+     */
+    static convert(inputData) {
+        if (!inputData || !inputData.data) return '';
+
+        if (inputData.type === 'html') {
+            return this.convertHtml(inputData.data);
+        }
+
+        return this.convertPlainText(inputData.data);
     }
 
     static escapeMarkdown(text) {

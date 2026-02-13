@@ -117,18 +117,18 @@
 
 ### 測試 ⚠️
 
-- [ ] T028 [P] [US3] 撰寫 Turndown.js 靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /lib/turndown/turndown.js 與 /lib/turndown/turndown-plugin-gfm.js 回傳 200）
-- [ ] T050 [P] [US3] 撰寫 convertHtml 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（HTML 標題 H1-H6、粗體/斜體、超連結、圖片、表格、引用區塊、水平線轉換驗證）
+- [X] T028 [P] [US3] 撰寫 Turndown.js 靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /lib/turndown/turndown.js 與 /lib/turndown/turndown-plugin-gfm.js 回傳 200）
+- [X] T050 [P] [US3] 撰寫 convertHtml 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（HTML 標題 H1-H6、粗體/斜體、超連結、圖片、表格、引用區塊、水平線轉換驗證）
 
 ### 實作
 
-- [ ] T029 [US3] 擴充 ClipboardHandler 偵測 text/html 格式於 TextToMarkDown/wwwroot/js/clipboard-handler.js（clipboardData.types 檢查、HTML 優先取得、InputData.type 設為 'html'）
-- [ ] T030 [US3] 實作 MarkdownConverter.convertHtml 函式於 TextToMarkDown/wwwroot/js/markdown-converter.js（初始化 TurndownService 實例、載入 GFM 外掛、設定 headingStyle 與 codeBlockStyle）
-- [ ] T031 [US3] 新增 Turndown 自訂規則：標題 H1-H6 轉換（FR-005）、超連結（FR-007）、圖片與佔位符（FR-008）於 TextToMarkDown/wwwroot/js/markdown-converter.js
-- [ ] T032 [US3] 新增 Turndown 自訂規則：粗體/斜體（FR-009）、程式碼區塊（FR-012）於 TextToMarkDown/wwwroot/js/markdown-converter.js
-- [ ] T033 [US3] 實作 MarkdownConverter.convert 統一入口函式於 TextToMarkDown/wwwroot/js/markdown-converter.js（根據 InputData.type 自動選擇 convertHtml 或 convertPlainText）
-- [ ] T034 [US3] 新增 GFM 表格轉換支持（FR-010）— 確認 turndown-plugin-gfm tables 外掛正確載入於 TextToMarkDown/wwwroot/js/markdown-converter.js
-- [ ] T051 [US3] 新增 Turndown 自訂規則：引用區塊 `<blockquote>` 轉換為 `>` 語法（FR-019）、水平線 `<hr>` 轉換為 `---`（FR-020）於 TextToMarkDown/wwwroot/js/markdown-converter.js
+- [X] T029 [US3] 擴充 ClipboardHandler 偵測 text/html 格式於 TextToMarkDown/wwwroot/js/clipboard-handler.js（clipboardData.types 檢查、HTML 優先取得、InputData.type 設為 'html'）
+- [X] T030 [US3] 實作 MarkdownConverter.convertHtml 函式於 TextToMarkDown/wwwroot/js/markdown-converter.js（初始化 TurndownService 實例、載入 GFM 外掛、設定 headingStyle 與 codeBlockStyle）
+- [X] T031 [US3] 新增 Turndown 自訂規則：標題 H1-H6 轉換（FR-005）、超連結（FR-007）、圖片與佔位符（FR-008）於 TextToMarkDown/wwwroot/js/markdown-converter.js
+- [X] T032 [US3] 新增 Turndown 自訂規則：粗體/斜體（FR-009）、程式碼區塊（FR-012）於 TextToMarkDown/wwwroot/js/markdown-converter.js
+- [X] T033 [US3] 實作 MarkdownConverter.convert 統一入口函式於 TextToMarkDown/wwwroot/js/markdown-converter.js（根據 InputData.type 自動選擇 convertHtml 或 convertPlainText）
+- [X] T034 [US3] 新增 GFM 表格轉換支持（FR-010）— 確認 turndown-plugin-gfm tables 外掛正確載入於 TextToMarkDown/wwwroot/js/markdown-converter.js
+- [X] T051 [US3] 新增 Turndown 自訂規則：引用區塊 `<blockquote>` 轉換為 `>` 語法（FR-019）、水平線 `<hr>` 轉換為 `---`（FR-020）於 TextToMarkDown/wwwroot/js/markdown-converter.js
 
 **檢查點**: User Stories 1 + 2 + 3 均可獨立運作 — 純文字與富文本輸入皆可正確轉換
 

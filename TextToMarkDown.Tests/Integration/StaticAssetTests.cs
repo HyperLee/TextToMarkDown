@@ -16,6 +16,8 @@ public class StaticAssetTests : IClassFixture<WebApplicationFactory<Program>>
     [InlineData("/js/markdown-converter.js")]
     [InlineData("/js/clipboard-handler.js")]
     [InlineData("/js/ui-controller.js")]
+    [InlineData("/lib/turndown/turndown.js")]
+    [InlineData("/lib/turndown/turndown-plugin-gfm.js")]
     public async Task Get_StaticAssets_ReturnsSuccessAndCorrectContentType(string url)
     {
         // Arrange

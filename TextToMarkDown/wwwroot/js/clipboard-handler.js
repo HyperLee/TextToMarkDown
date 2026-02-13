@@ -7,14 +7,14 @@ export class ClipboardHandler {
         let data = '';
         let type = 'text';
 
-        // Check for text/plain
-        // Note: 'types' can be a DOMStringList or Array depending on browser, 
-        // but .includes works on Array. DOMStringList has .contains but standard is includes in modern.
-        // Safer to use getData and check content.
-        
-        if (clipboardData.getData('text/plain')) {
-             data = clipboardData.getData('text/plain');
-             type = 'text';
+        // Check for text/html first (higher priority — rich content from web/Office)
+        const htmlData = clipboardData.getData('text/html');
+        if (htmlData) {
+            data = htmlData;
+            type = 'html';
+        } else if (clipboardData.getData('text/plain')) {
+            data = clipboardData.getData('text/plain');
+            type = 'text';
         }
 
         return { type, data };
