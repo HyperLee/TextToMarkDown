@@ -70,20 +70,20 @@
 
 > **先寫測試，確保失敗後再實作功能**
 
-- [ ] T015 [P] [US1] 撰寫首頁渲染整合測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證 GET / 回傳 200、含 #inputText、#convertBtn、#outputText 元素）
-- [ ] T016 [P] [US1] 撰寫靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /js/markdown-converter.js、/js/clipboard-handler.js、/js/ui-controller.js 回傳 200）
-- [ ] T048 [P] [US1] 撰寫 convertPlainText 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（段落保留、列表偵測、特殊字元跳脫、空白輸入處理）
-- [ ] T049 [P] [US1] 撰寫 ClipboardHandler JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/clipboard-handler.test.js（text/plain 偵測、InputData 物件建立、charCount 計算）
+- [X] T015 [P] [US1] 撰寫首頁渲染整合測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證 GET / 回傳 200、含 #inputText、#convertBtn、#outputText 元素）
+- [X] T016 [P] [US1] 撰寫靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /js/markdown-converter.js、/js/clipboard-handler.js、/js/ui-controller.js 回傳 200）
+- [X] T048 [P] [US1] 撰寫 convertPlainText 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（段落保留、列表偵測、特殊字元跳脫、空白輸入處理）
+- [X] T049 [P] [US1] 撰寫 ClipboardHandler JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/clipboard-handler.test.js（text/plain 偵測、InputData 物件建立、charCount 計算）
 
 ### 實作
 
-- [ ] T017 [US1] 建立轉換器頁面 UI 於 TextToMarkDown/Pages/Index.cshtml（textarea#inputText、button#convertBtn、textarea#outputText readonly、div#alertArea、span#charCount）
-- [ ] T018 [US1] 建立轉換器頁面樣式於 TextToMarkDown/wwwroot/css/site.css（輸入/輸出區域佈局、Bootstrap 5 響應式設計、字元計數樣式）
-- [ ] T019 [US1] 實作純文字轉 Markdown 引擎於 TextToMarkDown/wwwroot/js/markdown-converter.js（MarkdownConverter.init、MarkdownConverter.convertPlainText — 段落保留、列表偵測、特殊字元跳脫）
-- [ ] T020 [US1] 實作剪貼簿貼上處理模組於 TextToMarkDown/wwwroot/js/clipboard-handler.js（ClipboardHandler.init — paste 事件攔截、text/plain 偵測、InputData 物件建立）
-- [ ] T021 [US1] 實作 UI 控制器模組於 TextToMarkDown/wwwroot/js/ui-controller.js（UIController.init — 綁定轉換按鈕事件、空白輸入驗證 FR-014、字元計數更新、結果顯示）
-- [ ] T022 [US1] 實作空白輸入與超長文字驗證邏輯於 TextToMarkDown/wwwroot/js/ui-controller.js（空白提示 FR-014、100,000 字元超限提示）
-- [ ] T023 [US1] 在 TextToMarkDown/Pages/Index.cshtml 的 @section Scripts 載入 markdown-converter.js、clipboard-handler.js、ui-controller.js 並呼叫初始化
+- [X] T017 [US1] 建立轉換器頁面 UI 於 TextToMarkDown/Pages/Index.cshtml（textarea#inputText、button#convertBtn、textarea#outputText readonly、div#alertArea、span#charCount）
+- [X] T018 [US1] 建立轉換器頁面樣式於 TextToMarkDown/wwwroot/css/site.css（輸入/輸出區域佈局、Bootstrap 5 響應式設計、字元計數樣式）
+- [X] T019 [US1] 實作純文字轉 Markdown 引擎於 TextToMarkDown/wwwroot/js/markdown-converter.js（MarkdownConverter.init、MarkdownConverter.convertPlainText — 段落保留、列表偵測、特殊字元跳脫）
+- [X] T020 [US1] 實作剪貼簿貼上處理模組於 TextToMarkDown/wwwroot/js/clipboard-handler.js（ClipboardHandler.init — paste 事件攔截、text/plain 偵測、InputData 物件建立）
+- [X] T021 [US1] 實作 UI 控制器模組於 TextToMarkDown/wwwroot/js/ui-controller.js（UIController.init — 綁定轉換按鈕事件、空白輸入驗證 FR-014、字元計數更新、結果顯示）
+- [X] T022 [US1] 實作空白輸入與超長文字驗證邏輯於 TextToMarkDown/wwwroot/js/ui-controller.js（空白提示 FR-014、100,000 字元超限提示）
+- [X] T023 [US1] 在 TextToMarkDown/Pages/Index.cshtml 的 @section Scripts 載入 markdown-converter.js、clipboard-handler.js、ui-controller.js 並呼叫初始化
 
 **檢查點**: User Story 1 完整可用 — 使用者可貼入純文字、點擊轉換、在輸出區域看到 Markdown 格式文字
 
