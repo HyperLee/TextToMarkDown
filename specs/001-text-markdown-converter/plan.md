@@ -11,7 +11,7 @@
 
 **語言/版本**: C# 14 / .NET 10.0  
 **主要相依性**: ASP.NET Core 10.0（Razor Pages）、Bootstrap 5、jQuery 3.x、jQuery Validation、Turndown.js 7.1.0（HTML→Markdown）、turndown-plugin-gfm（GFM 表格/刪除線）、Serilog.AspNetCore  
-**儲存**: N/A（無資料庫，C# 靜態資料集合）  
+**儲存**: N/A（無資料庫，無伺服器端資料模型）  
 **測試**: xUnit + Moq（單元測試）+ WebApplicationFactory（整合測試）  
 **目標平台**: 桌面瀏覽器（Chrome、Edge、Firefox、Safari）  
 **專案類型**: Web（單一 Razor Pages 專案）  

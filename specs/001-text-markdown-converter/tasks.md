@@ -34,6 +34,7 @@
 - [ ] T006 [P] 下載並放置 turndown-plugin-gfm 至 TextToMarkDown/wwwroot/lib/turndown/turndown-plugin-gfm.js
 - [ ] T007 建立 xUnit 測試專案 TextToMarkDown.Tests/TextToMarkDown.Tests.csproj（含 xUnit、Moq、Microsoft.AspNetCore.Mvc.Testing 參考）
 - [ ] T008 [P] 將測試專案加入方案檔 TextToMarkDown.slnx
+- [ ] T047 [P] 安裝 Vitest JavaScript 測試框架至 TextToMarkDown/ 專案（npm init、安裝 vitest、建立 vitest.config.js、新增 package.json test 腳本）
 
 ---
 
@@ -71,6 +72,8 @@
 
 - [ ] T015 [P] [US1] 撰寫首頁渲染整合測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證 GET / 回傳 200、含 #inputText、#convertBtn、#outputText 元素）
 - [ ] T016 [P] [US1] 撰寫靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /js/markdown-converter.js、/js/clipboard-handler.js、/js/ui-controller.js 回傳 200）
+- [ ] T048 [P] [US1] 撰寫 convertPlainText 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（段落保留、列表偵測、特殊字元跳脫、空白輸入處理）
+- [ ] T049 [P] [US1] 撰寫 ClipboardHandler JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/clipboard-handler.test.js（text/plain 偵測、InputData 物件建立、charCount 計算）
 
 ### 實作
 
@@ -115,6 +118,7 @@
 ### 測試 ⚠️
 
 - [ ] T028 [P] [US3] 撰寫 Turndown.js 靜態資源整合測試於 TextToMarkDown.Tests/Integration/StaticAssetTests.cs（驗證 /lib/turndown/turndown.js 與 /lib/turndown/turndown-plugin-gfm.js 回傳 200）
+- [ ] T050 [P] [US3] 撰寫 convertHtml 核心函式 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（HTML 標題 H1-H6、粗體/斜體、超連結、圖片、表格、引用區塊、水平線轉換驗證）
 
 ### 實作
 
@@ -124,6 +128,7 @@
 - [ ] T032 [US3] 新增 Turndown 自訂規則：粗體/斜體（FR-009）、程式碼區塊（FR-012）於 TextToMarkDown/wwwroot/js/markdown-converter.js
 - [ ] T033 [US3] 實作 MarkdownConverter.convert 統一入口函式於 TextToMarkDown/wwwroot/js/markdown-converter.js（根據 InputData.type 自動選擇 convertHtml 或 convertPlainText）
 - [ ] T034 [US3] 新增 GFM 表格轉換支持（FR-010）— 確認 turndown-plugin-gfm tables 外掛正確載入於 TextToMarkDown/wwwroot/js/markdown-converter.js
+- [ ] T051 [US3] 新增 Turndown 自訂規則：引用區塊 `<blockquote>` 轉換為 `>` 語法（FR-019）、水平線 `<hr>` 轉換為 `---`（FR-020）於 TextToMarkDown/wwwroot/js/markdown-converter.js
 
 **檢查點**: User Stories 1 + 2 + 3 均可獨立運作 — 純文字與富文本輸入皆可正確轉換
 
@@ -134,6 +139,12 @@
 **目標**: 系統正確處理中文、英文、日韓文字及表情符號混合的文字內容，轉換無亂碼
 
 **獨立測試**: 貼入中英文混合、含表情符號的文字，驗證轉換後內容完整無亂碼
+
+### 測試 ⚠️
+
+> **先寫測試，確保失敗後再實作功能**
+
+- [ ] T052 [P] [US5] 撰寫 Unicode 多語言處理 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（中英文混合段落、CJK 字元列表偵測、表情符號保留、中文標點符號處理）
 
 ### 實作
 
@@ -150,6 +161,12 @@
 **目標**: 系統辨識 Mermaid 語法區塊並以 ` ```mermaid ` 程式碼區塊包裹
 
 **獨立測試**: 貼入含 Mermaid 語法的文字，驗證輸出包裹在 ` ```mermaid ` 程式碼區塊中
+
+### 測試 ⚠️
+
+> **先寫測試，確保失敗後再實作功能**
+
+- [ ] T053 [P] [US4] 撰寫 Mermaid 語法偵測 JS 單元測試於 TextToMarkDown/wwwroot/js/__tests__/markdown-converter.test.js（graph、flowchart、sequenceDiagram 等關鍵字偵測、已有 mermaid 標記不重複包裹、無 Mermaid 內容不產生區塊）
 
 ### 實作
 
@@ -168,8 +185,9 @@
 - [ ] T041 [P] 更新 TextToMarkDown/Pages/Privacy.cshtml 說明客戶端處理隱私政策（資料不離開瀏覽器）
 - [ ] T042 [P] 新增已有 Markdown 格式偵測邏輯於 TextToMarkDown/wwwroot/js/markdown-converter.js（偵測輸入已是 Markdown 則保持原樣不重複轉換）
 - [ ] T043 程式碼清理與 XML 文件註解確認於 TextToMarkDown/Pages/Index.cshtml.cs 與 TextToMarkDown/Program.cs
-- [ ] T044 [P] 撰寫全頁面端對端驗證測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證完整 HTML 結構包含所有合約定義的 UI 元素）
+- [ ] T044 [P] 撰寫全頁面端對端驗證測試於 TextToMarkDown.Tests/Integration/IndexPageTests.cs（驗證完整 HTML 結構包含所有合約定義的 UI 元素；含 FR-018 驗證：確認頁面僅有單一轉換入口，無批量轉換功能）
 - [ ] T045 [P] 新增 .gitignore 規則排除 Logs/ 目錄
+- [ ] T054 [P] 執行效能基準驗證（Lighthouse CLI 或手動檢測：FCP < 1.5s、LCP < 2.5s；10,000 字元轉換 < 3s 計時驗證）
 - [ ] T046 執行 quickstart.md 驗證 — 按快速入門指南步驟從零建構並啟動專案
 
 ---
@@ -205,13 +223,15 @@
 ### 平行執行機會
 
 - Phase 1: T003/T004（設定檔）與 T005/T006（函式庫下載）可平行
-- Phase 1: T007/T008（測試專案）可平行
+- Phase 1: T007/T008/T047（測試專案 + JS 測試框架）可平行
 - Phase 2: T009/T010（測試）可平行
 - Phase 2: T012/T013（佈局更新與日誌注入）可平行
-- Phase 3: T015/T016（測試）可平行
+- Phase 3: T015/T016/T048/T049（C# 整合測試 + JS 單元測試）可平行
 - Phase 4: T024（測試）獨立可執行
-- Phase 5: T028（測試）獨立可執行
-- Phase 8: T041/T042/T044/T045 全部可平行
+- Phase 5: T028/T050（C# 整合測試 + JS 單元測試）可平行
+- Phase 6: T052（JS 單元測試）獨立可執行
+- Phase 7: T053（JS 單元測試）獨立可執行
+- Phase 8: T041/T042/T044/T045/T054 全部可平行
 
 ---
 
