@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 namespace TextToMarkDown.Tests.Integration;
@@ -103,6 +103,8 @@ public class IndexPageTests : IClassFixture<WebApplicationFactory<Program>>
 
     /// <summary>
     /// T044: Verify the page loads required JavaScript modules for conversion.
+    /// The individual modules (markdown-converter, clipboard-handler, ui-controller)
+    /// are imported by app-init.js which is the single entry-point module.
     /// </summary>
     [Fact]
     public async Task IndexPage_LoadsRequiredScripts()
@@ -115,10 +117,9 @@ public class IndexPageTests : IClassFixture<WebApplicationFactory<Program>>
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
 
-        // Assert — Required JS modules are loaded
-        Assert.Contains("markdown-converter.js", content);
-        Assert.Contains("clipboard-handler.js", content);
-        Assert.Contains("ui-controller.js", content);
+        // Assert — The entry-point module that imports all required modules is loaded
+        // MapStaticAssets fingerprints filenames, so match the base name only
+        Assert.Contains("app-init", content);
     }
 
     /// <summary>

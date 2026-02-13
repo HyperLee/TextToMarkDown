@@ -32,10 +32,5 @@
 </div>
 
 @section Scripts {
-    <script type="module">
-        import '/js/markdown-converter.js';
-        import '/js/clipboard-handler.js';
-        import '/js/ui-controller.js';
-        window.UIController.init();
-    </script>
+    <script type="module" src="~/js/app-init.js" asp-append-version="true"></script>
 }
