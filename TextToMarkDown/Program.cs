@@ -21,6 +21,18 @@ public class Program
 
         app.UseSerilogRequestLogging();
 
+        // Security headers middleware (T011)
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Append("Content-Security-Policy",
+                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'");
+            context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+            context.Response.Headers.Append("X-Frame-Options", "DENY");
+            context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+
+            await next();
+        });
+
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {

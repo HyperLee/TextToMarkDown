@@ -46,15 +46,15 @@
 
 ### 測試（先寫測試，確保失敗）
 
-- [ ] T009 [P] 撰寫 Serilog 設定驗證單元測試於 TextToMarkDown.Tests/Unit/ProgramConfigurationTests.cs（驗證 Serilog 已註冊、ILogger 可注入）
-- [ ] T010 [P] 撰寫安全標頭整合測試於 TextToMarkDown.Tests/Integration/SecurityHeaderTests.cs（驗證 CSP、X-Content-Type-Options、X-Frame-Options 標頭）
+- [X] T009 [P] 撰寫 Serilog 設定驗證單元測試於 TextToMarkDown.Tests/Unit/ProgramConfigurationTests.cs（驗證 Serilog 已註冊、ILogger 可注入）
+- [X] T010 [P] 撰寫安全標頭整合測試於 TextToMarkDown.Tests/Integration/SecurityHeaderTests.cs（驗證 CSP、X-Content-Type-Options、X-Frame-Options 標頭）
 
 ### 實作
 
-- [ ] T011 設定安全標頭中介軟體於 TextToMarkDown/Program.cs（CSP、X-Content-Type-Options、X-Frame-Options、Referrer-Policy）
-- [ ] T012 更新 TextToMarkDown/Pages/Shared/_Layout.cshtml 載入 Turndown.js 與 GFM 外掛 script 標籤
-- [ ] T013 [P] 更新 TextToMarkDown/Pages/Index.cshtml.cs 注入 ILogger 並記錄頁面存取日誌
-- [ ] T014 移除 TextToMarkDown/appsettings.json 中的預設 "Logging" 區段（已被 Serilog 取代）
+- [X] T011 設定安全標頭中介軟體於 TextToMarkDown/Program.cs（CSP、X-Content-Type-Options、X-Frame-Options、Referrer-Policy）
+- [X] T012 更新 TextToMarkDown/Pages/Shared/_Layout.cshtml 載入 Turndown.js 與 GFM 外掛 script 標籤
+- [X] T013 [P] 更新 TextToMarkDown/Pages/Index.cshtml.cs 注入 ILogger 並記錄頁面存取日誌
+- [X] T014 移除 TextToMarkDown/appsettings.json 中的預設 "Logging" 區段（已被 Serilog 取代）
 
 **檢查點**: 基礎設施就緒 — Serilog 運作正常、安全標頭正確、Turndown.js 可載入、測試通過
 
