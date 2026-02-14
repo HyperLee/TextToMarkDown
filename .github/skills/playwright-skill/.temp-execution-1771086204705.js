@@ -86,7 +86,7 @@ function getContextOptionsWithHeaders(options = {}) {
     }
 
   // 取得當前執行的原始程式碼
-  const rawTestCode = JSON.parse("\"\\nconst TARGET_URL = 'http://localhost:5000';\\n\\nconst browser = await helpers.launchBrowser();\\nconst context = await helpers.createContext(browser);\\nconst page = await helpers.createPage(context);\\n\\n// Capture console messages\\nconst consoleLogs = [];\\npage.on('console', msg => consoleLogs.push(msg.type() + ': ' + msg.text()));\\npage.on('pageerror', err => consoleLogs.push('PAGE_ERROR: ' + err.message));\\n\\nawait page.goto(TARGET_URL, { waitUntil: 'networkidle' });\\nawait page.waitForTimeout(1000);\\n\\nconst result = await page.evaluate(() => {\\n  return {\\n    hasTurndown: typeof TurndownService !== 'undefined',\\n    hasTurndownOnWindow: typeof window.TurndownService !== 'undefined',\\n    hasGfm: typeof turndownPluginGfm !== 'undefined',\\n    scripts: Array.from(document.querySelectorAll('script')).map(s => s.src || 'inline'),\\n    converterExists: typeof window.MarkdownConverter !== 'undefined',\\n    converterHtml: window.MarkdownConverter ? typeof window.MarkdownConverter.convertHtml : 'N/A'\\n  };\\n});\\n\\nconsole.log('Browser state:', JSON.stringify(result, null, 2));\\nconsole.log('Console logs:', consoleLogs.join('\\\\n'));\\n\\n// Try actual HTML conversion\\nconst htmlResult = await page.evaluate(() => {\\n  if (!window.MarkdownConverter) return 'No MarkdownConverter';\\n  try {\\n    return window.MarkdownConverter.convertHtml('<h1>Test</h1><p><strong>Bold</strong> text</p>');\\n  } catch(e) {\\n    return 'Error: ' + e.message;\\n  }\\n});\\nconsole.log('HTML conversion result:', htmlResult);\\n\\nawait browser.close();\\n\"");
+  const rawTestCode = JSON.parse("\"\\nconst browser = await helpers.launchBrowser();\\nconst context = await helpers.createContext(browser);\\nconst page = await helpers.createPage(context);\\n\\npage.on('pageerror', err => console.log('PAGE_ERROR: ' + err.message));\\n\\nawait page.goto('http://localhost:5000', { waitUntil: 'networkidle' });\\nawait page.waitForTimeout(500);\\n\\nconst result = await page.evaluate(() => {\\n  return {\\n    hasTurndown: typeof TurndownService !== 'undefined',\\n    htmlResult: window.MarkdownConverter.convertHtml('<h1>Hello</h1><p>This is <strong>bold</strong> with a <a href=\\\\ https://example.com\\\\>link</a>.</p>'),\\n  };\\n});\\n\\nconsole.log('TurndownService available:', result.hasTurndown);\\nconsole.log('HTML conversion result:', result.htmlResult);\\n\\nawait logStep('Turndown 載入成功', result.hasTurndown, { behavior: 'TurndownService: ' + result.hasTurndown });\\nawait logStep('HTML 轉 Markdown 正確', result.htmlResult.includes('# Hello') && result.htmlResult.includes('**bold**') && result.htmlResult.includes('[link]'), { behavior: result.htmlResult });\\n\\nawait browser.close();\\n\"");
 
   try {
     // 監聽 response 以取得最後的狀態碼
@@ -101,44 +101,27 @@ function getContextOptionsWithHeaders(options = {}) {
     const execute = async () => {
       // 在 code 執行前注入 context 追蹤
       
-const TARGET_URL = 'http://localhost:5000';
-
 const browser = await helpers.launchBrowser();
 const context = await helpers.createContext(browser);
 const page = await helpers.createPage(context);
 
-// Capture console messages
-const consoleLogs = [];
-page.on('console', msg => consoleLogs.push(msg.type() + ': ' + msg.text()));
-page.on('pageerror', err => consoleLogs.push('PAGE_ERROR: ' + err.message));
+page.on('pageerror', err => console.log('PAGE_ERROR: ' + err.message));
 
-await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
-await page.waitForTimeout(1000);
+await page.goto('http://localhost:5000', { waitUntil: 'networkidle' });
+await page.waitForTimeout(500);
 
 const result = await page.evaluate(() => {
   return {
     hasTurndown: typeof TurndownService !== 'undefined',
-    hasTurndownOnWindow: typeof window.TurndownService !== 'undefined',
-    hasGfm: typeof turndownPluginGfm !== 'undefined',
-    scripts: Array.from(document.querySelectorAll('script')).map(s => s.src || 'inline'),
-    converterExists: typeof window.MarkdownConverter !== 'undefined',
-    converterHtml: window.MarkdownConverter ? typeof window.MarkdownConverter.convertHtml : 'N/A'
+    htmlResult: window.MarkdownConverter.convertHtml('<h1>Hello</h1><p>This is <strong>bold</strong> with a <a href=\ https://example.com\>link</a>.</p>'),
   };
 });
 
-console.log('Browser state:', JSON.stringify(result, null, 2));
-console.log('Console logs:', consoleLogs.join('\n'));
+console.log('TurndownService available:', result.hasTurndown);
+console.log('HTML conversion result:', result.htmlResult);
 
-// Try actual HTML conversion
-const htmlResult = await page.evaluate(() => {
-  if (!window.MarkdownConverter) return 'No MarkdownConverter';
-  try {
-    return window.MarkdownConverter.convertHtml('<h1>Test</h1><p><strong>Bold</strong> text</p>');
-  } catch(e) {
-    return 'Error: ' + e.message;
-  }
-});
-console.log('HTML conversion result:', htmlResult);
+await logStep('Turndown 載入成功', result.hasTurndown, { behavior: 'TurndownService: ' + result.hasTurndown });
+await logStep('HTML 轉 Markdown 正確', result.htmlResult.includes('# Hello') && result.htmlResult.includes('**bold**') && result.htmlResult.includes('[link]'), { behavior: result.htmlResult });
 
 await browser.close();
 

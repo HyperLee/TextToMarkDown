@@ -1,7 +1,5 @@
-var TurndownService = (function (domino) {
+var TurndownService = (function () {
   'use strict';
-
-  domino = domino && Object.prototype.hasOwnProperty.call(domino, 'default') ? domino['default'] : domino;
 
   function extend (destination) {
     for (var i = 1; i < arguments.length; i++) {
@@ -972,4 +970,4 @@ var TurndownService = (function (domino) {
 
   return TurndownService;
 
-}(domino));
+}());
